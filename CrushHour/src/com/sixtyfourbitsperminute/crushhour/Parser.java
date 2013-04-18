@@ -44,33 +44,52 @@ public class Parser {
 		for(int row = 0; row < this.gridSize; row++){
 			for(int column = 0; column < this.gridSize; column++){
 				char current = this.grid[row][column];
-				char charAbove, charTwoAbove, charBelow, charTwoBelow, charLeft, charTwoLeft, charRight, charTwoRight = 'x';
+				int[] position = {row, column};
+				char[] neighbors = {'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x',};
 				if(row-1 > 0){
-					charAbove = this.grid[row-1][column];
+					neighbors[0] = this.grid[row-1][column];
 				}
 				if(row-2 > 0){
-					charTwoAbove = this.grid[row-1][column];
+					neighbors[1] = this.grid[row-1][column];
 				}
 				if(row+1 < this.gridSize){
-					charBelow = this.grid[row+1][column];
+					neighbors[2] = this.grid[row+1][column];
 				}
 				if(row+2 < this.gridSize){
-					charTwoBelow = this.grid[row+2][column];
+					neighbors[3] = this.grid[row+2][column];
 				}
 				if(column-1 > 0){
-					charLeft = this.grid[row][column-1];
+					neighbors[4] = this.grid[row][column-1];
 				}
 				if(column-2 > 0){
-					charTwoLeft = this.grid[row][column-2];
+					neighbors[5] = this.grid[row][column-2];
 				}
 				if(column+1 > 0){
-					charRight = this.grid[row][column+1];
+					neighbors[6] = this.grid[row][column+1];
 				}
 				if(column+2 > 0){
-					charTwoRight = this.grid[row][column+2];
+					neighbors[7] = this.grid[row][column+2];
+				}
+				if(current == 'x'){
+					continue;
 				}
 			}
 		}
+		return false;
+	}
+	
+	public boolean isTruck(char current, char[] neightbors, int[] position){
+		
+		return false;
+	}
+	
+	public boolean isCar(char current, char[] neightbors, int[] position){
+		
+		return false;
+	}
+	
+	public boolean letterExistsElsewhere(char current, int[] position){
+		
 		return false;
 	}
 	
@@ -81,6 +100,11 @@ public class Parser {
 	public Vehicle findUserCar(){
 		
 		return null;
+	}
+	
+	public boolean gridHasUserCar(){
+		
+		return false;
 	}
 	
 	public boolean fileCanCreateGrid(){
