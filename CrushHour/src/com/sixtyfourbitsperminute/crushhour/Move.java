@@ -19,7 +19,7 @@ public class Move {
 		return steps;
 	}
 	
-	public boolean moveSurpassesGrid(){
+	public boolean doesNotSurpassGrid(){
 		int moveable = 0;
 		if(this.vehicle.isHorizontal()){
 			moveable = this.vehicle.position[0];

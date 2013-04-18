@@ -20,6 +20,8 @@ public class Vehicle {
 	
 	public ArrayList<Move> getPossibleMoves(Grid grid){
 		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		//every time new move is created call move.doesNotSurpassGrid(); 
+		
 		
 		return possibleMoves;
 	}
