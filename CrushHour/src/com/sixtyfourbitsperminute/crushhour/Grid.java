@@ -1,17 +1,26 @@
 package com.sixtyfourbitsperminute.crushhour;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Grid {
-	ArrayList<Vehicle> vehicleList;
+	HashMap<Character, Vehicle> vehicles;
 	ArrayList<Grid> previousGrids;
+	int gridSize;
 	
-	
-	public ArrayList<Vehicle> getVehicleList() {
-		return vehicleList;
+	public Grid executeMove(Object object) {
+
+		return null;
 	}
-	public void setVehicleList(ArrayList<Vehicle> vehicleList) {
-		this.vehicleList = vehicleList;
+	
+	public int getGridSize(){
+		return gridSize;
+	}
+	public void setGridSize(int size){
+		gridSize = size;
+	}
+	public HashMap<Character, Vehicle> getVehicles() {
+		return vehicles;
 	}
 	public ArrayList<Grid> getPreviousGrids() {
 		return previousGrids;
@@ -27,7 +36,7 @@ public class Grid {
 		result = prime * result
 				+ ((previousGrids == null) ? 0 : previousGrids.hashCode());
 		result = prime * result
-				+ ((vehicleList == null) ? 0 : vehicleList.hashCode());
+				+ ((vehicles == null) ? 0 : vehicles.hashCode());
 		return result;
 	}
 	@Override
@@ -44,16 +53,21 @@ public class Grid {
 				return false;
 		} else if (!previousGrids.equals(other.previousGrids))
 			return false;
-		if (vehicleList == null) {
-			if (other.vehicleList != null)
+		if (vehicles == null) {
+			if (other.vehicles != null)
 				return false;
-		} else if (!vehicleList.equals(other.vehicleList))
+		} else if (!vehicles.equals(other.vehicles))
 			return false;
 		return true;
 	}
-	public Grid executeMove(Object object) {
-		
-		return null;
+
+	public boolean playerCanExit() {
+		Car player = (Car) vehicles.get('a');
+		for(int i = player.position[0]; i < gridSize; i++){
+			
+		}
+		return false;
 	}
+	
 	
 }

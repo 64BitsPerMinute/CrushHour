@@ -1,20 +1,25 @@
 package com.sixtyfourbitsperminute.crushhour;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Solver {
 
+	HashMap<Character, Vehicle> vehicles;
+	
 	public Grid bruteForce(Grid grid) {
-		if (checkIfSolved(grid)) {
+		vehicles = grid.getVehicles();
+		
+		if (grid.playerCanExit()) {
 			return grid;
 		}
 		
 		// for each vehicle
-		ArrayList<Vehicle> vehicles = grid.getVehicleList();
-		for (int i = 0; i < vehicles.size(); i++) {
-
+		
+		for (Character key : vehicles.keySet()) {
+			
 			// for each move
-			ArrayList moves = vehicles.get(i).getPossibleMoves(grid);
+			ArrayList moves = vehicles.get(key).getPossibleMoves(grid);
 			if (moves.isEmpty()) {
 				continue;
 			}
@@ -32,8 +37,5 @@ public class Solver {
 
 	}
 
-	private boolean checkIfSolved(Grid grid) {
-		return false;
-
-	}
+	
 }
