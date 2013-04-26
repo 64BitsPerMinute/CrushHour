@@ -9,6 +9,7 @@ public class Parser {
 	String[] gridLines;
 	int gridSize;
 	char[][] grid;
+	HashMap<Character, Vehicle> vehicleMap;
 
 	public Parser (String gridString){
 		this.gridString = gridString;
@@ -49,10 +50,20 @@ public class Parser {
 				neighbors = readInNeighbors(neighbors, row, column);
 				if(current == 'x'){
 					continue;
+				} else {
+					
 				}
 			}
 		}
 		return false;
+	}
+	
+	public boolean getDirection (char current, char[] neighbors){
+		if(current == neighbors[0] || current == neighbors[2]){
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	public boolean isTruck(char current, char[] neighbors, int[] position){
@@ -172,18 +183,28 @@ public class Parser {
 		return neighbors;
 	}
 	
-	public void addVehicleToMap(){
-		
+	public void addVehicleToMap(char current, boolean direction, int[] position, int length){
+		Vehicle vehicle;
+		if(length == 3){
+			vehicle = new Truck(direction, position);
+		} else {
+			vehicle = new Car(direction, position);
+		}
+		if(!vehicleMap.containsKey(current)){
+			vehicleMap.put(current, vehicle);
+		}
 	}
 	
 	public Vehicle findUserCar(){
-		
-		return null;
+		return vehicleMap.get("A");
 	}
 	
 	public boolean gridHasUserCar(){
-		
-		return false;
+		if(vehicleMap.containsKey("A")){
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean fileCanCreateGrid(){
