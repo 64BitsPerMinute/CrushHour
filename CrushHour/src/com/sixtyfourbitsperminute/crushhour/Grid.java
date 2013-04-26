@@ -62,8 +62,8 @@ public class Grid {
 	}
 
 	public boolean playerCanExit() {
-		Car player = (Car) vehicles.get('a');
-		for(int i = player.position[0]; i < gridSize; i++){
+		Car player = (Car) vehicles.get('A');
+		for(int i = player.position.x; i < gridSize; i++){
 			
 		}
 		return false;

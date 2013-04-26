@@ -5,9 +5,15 @@ package com.sixtyfourbitsperminute.crushhour;
 public class Car extends Vehicle {
 	int length = 2;
 
-	public Car (boolean direction, int[] position){
+	public Car (boolean direction, Coordinate position){
 		this.horizontal = direction;
-		this.position[0] = position[0];
-		this.position[1] = position[1];
+		this.position.x = position.x;
+		this.position.y = position.y;
+	}
+	
+	public Car (boolean direction, int xPosition, int yPosition){
+		this.horizontal = direction;
+		this.position.x = xPosition;
+		this.position.y = yPosition;
 	}
 }

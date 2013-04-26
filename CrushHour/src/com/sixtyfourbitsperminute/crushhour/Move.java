@@ -22,9 +22,9 @@ public class Move {
 	public boolean doesNotSurpassGrid(){
 		int moveable = 0;
 		if(this.vehicle.isHorizontal()){
-			moveable = this.vehicle.position[0];
+			moveable = this.vehicle.position.x;
 		} else {
-			moveable = this.vehicle.position[1];
+			moveable = this.vehicle.position.y;
 		}
 		if(moveable + this.steps + this.vehicle.length < this.gridSize && steps > 0){
 			return true;
