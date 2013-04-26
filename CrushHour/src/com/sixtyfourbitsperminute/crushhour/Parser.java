@@ -51,11 +51,19 @@ public class Parser {
 				if(current == 'x'){
 					continue;
 				} else {
-					
+					if(isTruck(current, neighbors, position)){
+						boolean direction = getDirection(current, neighbors);
+						addVehicleToMap(current, direction, position, 3);
+					} else if(isCar(current, neighbors, position)){
+						boolean direction = getDirection(current, neighbors);
+						addVehicleToMap(current, direction, position, 2);
+					} else {
+						return false;
+					}
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public boolean getDirection (char current, char[] neighbors){
@@ -72,41 +80,52 @@ public class Parser {
 			int[] positionThree = {(position[0]-2), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[2] && current == neighbors[3]){
 			int[] positionTwo = {(position[0]+1), position[1]};
 			int[] positionThree = {(position[0]+2), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[0] && current == neighbors[2]){
 			int[] positionTwo = {(position[0]-1), position[1]};
 			int[] positionThree = {(position[0]+1), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[4] && current == neighbors[5]){
 			int[] positionTwo = {position[0], (position[1]-1)};
 			int[] positionThree = {position[0], (position[1]-2)};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[6] && current == neighbors[7]){
 			int[] positionTwo = {position[0], (position[1]+1)};
 			int[] positionThree = {position[0], (position[1]+2)};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[4] && current == neighbors[6]){
 			int[] positionTwo = {position[0], (position[1]-1)};
 			int[] positionThree = {position[0], (position[1]+1)};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
 				return true;
+			} else {
+				return false;
 			}
 		} else {
 			return false;
 		}
-		return false;
 	}
 	
 	public boolean isCar(char current, char[] neighbors, int[] position){
@@ -114,26 +133,33 @@ public class Parser {
 			int[] positionTwo = {(position[0]-1), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[2]){
 			int[] positionTwo = {(position[0]+1), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[4]){
 			int[] positionTwo = {position[0], (position[1]-1)};
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
 				return true;
+			} else {
+				return false;
 			}
 		} else if (current == neighbors[6]){
 			int[] positionTwo = {position[0], (position[1]+1)};
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
 				return true;
+			} else {
+				return false;
 			}
 		} else {
 			return false;
 		}
-		return false;
 	}
 	
 	public boolean letterExistsElsewhere(char current, int[] positionOne, int[] positionTwo, int[] positionThree){
@@ -186,9 +212,9 @@ public class Parser {
 	public void addVehicleToMap(char current, boolean direction, int[] position, int length){
 		Vehicle vehicle;
 		if(length == 3){
-			vehicle = new Truck(direction, position);
+			vehicle = new Truck(direction, position[0], position[1]);
 		} else {
-			vehicle = new Car(direction, position);
+			vehicle = new Car(direction, position[0], position[1]);
 		}
 		if(!vehicleMap.containsKey(current)){
 			vehicleMap.put(current, vehicle);
@@ -208,12 +234,26 @@ public class Parser {
 	}
 	
 	public boolean fileCanCreateGrid(){
-		
-		return false;
+		if(isSquareGrid()){
+			if(allVehiclesAreLegal()){
+				if(gridHasUserCar()){
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 	
 	public Grid createGrid(){
-		
-		return null;
+		Grid grid = null;
+		if(fileCanCreateGrid()){
+			grid = new Grid(this.vehicleMap, this.gridSize);
+		}
+		return grid;
 	}
 }

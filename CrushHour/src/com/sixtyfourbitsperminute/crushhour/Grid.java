@@ -8,6 +8,11 @@ public class Grid {
 	ArrayList<Grid> previousGrids;
 	int gridSize;
 	
+	public Grid(HashMap<Character, Vehicle> vehicles, int gridSize){
+		this.vehicles = vehicles;
+		this.gridSize = gridSize;
+	}
+	
 	public Grid executeMove(Object object) {
 
 		return null;
