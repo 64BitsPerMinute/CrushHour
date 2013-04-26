@@ -25,4 +25,18 @@ public class Vehicle {
 		
 		return possibleMoves;
 	}
+	
+	public boolean intersects(int[] coordinate){
+		for(int i = 0; i<length; i++){
+			if(horizontal){
+				
+			} else {
+				
+			}
+		}
+		
+		
+		return false;
+	}
+	
 }
