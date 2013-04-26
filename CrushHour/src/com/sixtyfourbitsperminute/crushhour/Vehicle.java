@@ -27,24 +27,35 @@ public class Vehicle {
 	
 	public ArrayList<Coordinate> coveredCoordinates(){
 		ArrayList<Coordinate> c = new ArrayList<Coordinate>();
-		
-		
-		
-		
+		if(horizontal){
+			for(int i = 0; i<length; i++){
+				c.add(new Coordinate(position.x+i,position.y));
+			}
+		} else {
+			for(int i = 0; i<length; i++){
+				c.add(new Coordinate(position.x,position.y+i));
+			}
+		}
 		return c;
 	}
 	
 	
-	public boolean intersects(Coordinate c){
-		for(int i = 0; i<length; i++){
-			if(horizontal){
-				
-			} else {
-				
+	public boolean intersects(Coordinate coordinate){
+		ArrayList<Coordinate> covered = this.coveredCoordinates();
+		for(int i = 0; i<covered.size(); i++){
+			if(coordinate.equals(covered.get(i))){
+				return true;
 			}
 		}
-		
-		
+		return false;
+	}
+	
+	public boolean intersects(ArrayList<Coordinate> coordinates){
+		for(int i = 0; i<coordinates.size(); i++){
+			if(this.intersects(coordinates.get(i))){
+				return true;
+			}
+		}
 		return false;
 	}
 	
