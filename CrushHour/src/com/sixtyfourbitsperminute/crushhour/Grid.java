@@ -7,33 +7,54 @@ public class Grid {
 	HashMap<Character, Vehicle> vehicles;
 	ArrayList<Grid> previousGrids;
 	int gridSize;
-	
-	public Grid(HashMap<Character, Vehicle> vehicles, int gridSize){
+
+	public Grid(HashMap<Character, Vehicle> vehicles, int gridSize) {
 		this.vehicles = vehicles;
 		this.gridSize = gridSize;
 	}
-	
+
 	public Grid executeMove(Object object) {
 
 		return null;
 	}
-	
-	public int getGridSize(){
+
+	public int getGridSize() {
 		return gridSize;
 	}
-	public void setGridSize(int size){
+
+	public void setGridSize(int size) {
 		gridSize = size;
 	}
+
 	public HashMap<Character, Vehicle> getVehicles() {
 		return vehicles;
 	}
+
 	public ArrayList<Grid> getPreviousGrids() {
 		return previousGrids;
 	}
+
 	public void setPreviousGrids(ArrayList<Grid> previousGrids) {
 		this.previousGrids = previousGrids;
 	}
+
+	public ArrayList<Coordinate> getCoveredCoordinates() {
+		ArrayList<Coordinate> coveredCoordinates = new ArrayList<Coordinate>();
+		for (Character key : getVehicles().keySet()) {
+			coveredCoordinates.addAll(getVehicles().get(key).getCoveredCoordinates());
+		}
+		return coveredCoordinates;
+	}
 	
+	public ArrayList<Coordinate> getCoveredCoordinatesExcludingVehicle(Vehicle v) {
+		ArrayList<Coordinate> coveredCoordinates = new ArrayList<Coordinate>();
+		for (Character key : getVehicles().keySet()) {
+			coveredCoordinates.addAll(getVehicles().get(key).getCoveredCoordinates());
+		}
+		coveredCoordinates.removeAll(v.getCoveredCoordinates());
+		return coveredCoordinates;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -44,6 +65,7 @@ public class Grid {
 				+ ((vehicles == null) ? 0 : vehicles.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,11 +90,10 @@ public class Grid {
 
 	public boolean playerCanExit() {
 		Car player = (Car) vehicles.get('A');
-		for(int i = player.position.x; i < gridSize; i++){
-			
+		for (int i = player.position.x; i < gridSize; i++) {
+
 		}
 		return false;
 	}
-	
-	
+
 }

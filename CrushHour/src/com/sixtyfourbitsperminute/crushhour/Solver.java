@@ -19,7 +19,7 @@ public class Solver {
 		for (Character key : vehicles.keySet()) {
 			
 			// for each move
-			ArrayList moves = vehicles.get(key).getPossibleMoves(grid);
+			ArrayList<Move> moves = vehicles.get(key).getPossibleMoves(grid);
 			if (moves.isEmpty()) {
 				continue;
 			}
