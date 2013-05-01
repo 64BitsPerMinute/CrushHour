@@ -1,14 +1,40 @@
 package com.sixtyfourbitsperminute.crushhour;
 
+/**
+ * @author Jonathan Thompson
+ * @author Kelly Croswell
+ *
+ * This class creates a Coordinate of an x and y paired integer for use in mapping 
+ * vehicles to a grid.
+ */
 public class Coordinate {
+	
+	/**
+	 * A variable that holds the x value of the coordinate.
+	 */
 	int x;
+	
+	/**
+	 * A variable that holds the y value of the coordinate. 
+	 */
 	int y;
 	
+	/**
+	 * This is the constructor for this class. It takes in two integers and maps 
+	 * them to the x and y values in the Coordinate. 
+	 * @param x The integer that will be mapped to the x value.
+	 * @param y The integer that will be mapped to the y value. 
+	 */
 	public Coordinate(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
+	/**
+	 * This is the overridden hash code method for the coordinate class. Implemented 
+	 * so that .contains() can be called in lists.  
+	 * @return An integer containing the hash code.
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -18,6 +44,11 @@ public class Coordinate {
 		return result;
 	}
 
+	/**
+	 * This is the overridden equals method for the coordinate class. Implemented 
+	 * so that .contains() can be called in lists. 
+	 * @return Whether or not two coordinate pairs are equal.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
