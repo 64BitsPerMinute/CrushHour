@@ -5,13 +5,11 @@ public class Truck extends Vehicle{
 
 	public Truck (boolean direction, Coordinate position){
 		this.horizontal = direction;
-		this.position.x = position.x;
-		this.position.y = position.y;
+		this.position = new Coordinate(position.x, position.y);
 	}
 	
 	public Truck (boolean direction, int xPosition, int yPosition){
 		this.horizontal = direction;
-		this.position.x = xPosition;
-		this.position.y = yPosition;
+		this.position = new Coordinate(xPosition, yPosition);
 	}
 }
