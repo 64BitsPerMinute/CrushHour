@@ -169,5 +169,29 @@ public class Grid {
 		}
 		return false;
 	}
+	
+	/**
+	 * This method turns the list of vehicles associated with a grid into a String 
+	 * complete with x's for empty spots so that the grid can be handed over to 
+	 * the GUI for parsing.
+	 * @return A String containing the grid.
+	 */
+	public String gridToString () {
+		char[][] result = {{'x', 'x', 'x', 'x', 'x', 'x'},  
+						   {'x', 'x', 'x', 'x', 'x', 'x'},  
+						   {'x', 'x', 'x', 'x', 'x', 'x'},  
+						   {'x', 'x', 'x', 'x', 'x', 'x'},  
+						   {'x', 'x', 'x', 'x', 'x', 'x'},  
+						   {'x', 'x', 'x', 'x', 'x', 'x'}};
+		for(char c : this.vehicles.keySet()){
+			Vehicle current = vehicles.get(c);
+			ArrayList<Coordinate> coveredPositions = current.getCoveredCoordinates();
+			for(int i = 0; i < coveredPositions.size(); i++){
+				Coordinate currentCoordinate = coveredPositions.get(i);
+				result[currentCoordinate.x][currentCoordinate.y] = c;
+			}
+		}
+		return result.toString();
+	}
 
 }
