@@ -51,13 +51,16 @@ public class Parser {
 	 * @return A boolean containing whether or not the grid is square.
 	 */
 	public boolean isSquareGrid(){
+		if(this.gridString.length() == 0){
+			return false;
+		}
 		String[] gridLines = this.gridString.split("\n");
-		System.out.println(gridLines);
+		//System.out.println(gridLines);
 		for(int i = 0; i < gridLines.length; i++){
 			gridLines[i].trim();
 		}
 		if(gridLines[0].length() == gridLines.length){
-			System.out.println("Inside if statement in isSquareGrid.");
+			//System.out.println("Inside if statement in isSquareGrid.");
 			this.gridLines = gridLines;
 			this.gridSize = gridLines.length;
 			readStringInto2DArray();
@@ -95,20 +98,20 @@ public class Parser {
 		for(int row = 0; row < this.gridSize; row++){
 			for(int column = 0; column < this.gridSize; column++){
 				char current = this.grid[row][column];
-				System.out.println("Current character: " + current + ", and current position: [" + row + ", " + column + "]");
+				//System.out.println("Current character: " + current + ", and current position: [" + row + ", " + column + "]");
 				int[] position = {row, column};
 				char[] neighbors = {'?', '?', '?', '?', '?', '?', '?', '?'};
 				neighbors = readInNeighbors(neighbors, row, column);
-				System.out.println(neighbors);
+				//System.out.println(neighbors);
 				if(current == 'x'){
 					continue;
 				} else {
 					if(isTruck(current, neighbors, position)){
-						System.out.println("In Truck if statement");
+						//System.out.println("In Truck if statement");
 						boolean direction = getDirection(current, neighbors);
 						addVehicleToMap(current, direction, position, 3);
 					} else if(isCar(current, neighbors, position)){
-						System.out.println("In car if statement");
+						//System.out.println("In car if statement");
 						boolean direction = getDirection(current, neighbors);
 						addVehicleToMap(current, direction, position, 2);
 					} else {
@@ -149,7 +152,7 @@ public class Parser {
 			int[] positionTwo = {(position[0]-1), position[1]};
 			int[] positionThree = {(position[0]-2), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
-				System.out.println("truck position 1");
+				//System.out.println("truck position 1");
 				return true;
 			} else {
 				return false;
@@ -158,7 +161,7 @@ public class Parser {
 			int[] positionTwo = {(position[0]+1), position[1]};
 			int[] positionThree = {(position[0]+2), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
-				System.out.println("truck position 2");
+				//System.out.println("truck position 2");
 				return true;
 			} else {
 				return false;
@@ -167,7 +170,7 @@ public class Parser {
 			int[] positionTwo = {(position[0]-1), position[1]};
 			int[] positionThree = {(position[0]+1), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
-				System.out.println("truck position 3");
+				//System.out.println("truck position 3");
 				return true;
 			} else {
 				return false;
@@ -176,7 +179,7 @@ public class Parser {
 			int[] positionTwo = {position[0], (position[1]-1)};
 			int[] positionThree = {position[0], (position[1]-2)};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
-				System.out.println("truck position 4");
+				//System.out.println("truck position 4");
 				return true;
 			} else {
 				return false;
@@ -185,7 +188,7 @@ public class Parser {
 			int[] positionTwo = {position[0], (position[1]+1)};
 			int[] positionThree = {position[0], (position[1]+2)};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
-				System.out.println("truck position 5");
+				//System.out.println("truck position 5");
 				return true;
 			} else {
 				return false;
@@ -194,7 +197,7 @@ public class Parser {
 			int[] positionTwo = {position[0], (position[1]-1)};
 			int[] positionThree = {position[0], (position[1]+1)};
 			if(!letterExistsElsewhere(current, position, positionTwo, positionThree)){
-				System.out.println("truck position 6");
+				//System.out.println("truck position 6");
 				return true;
 			} else {
 				return false;
@@ -216,7 +219,7 @@ public class Parser {
 		if(current == neighbors[0]){
 			int[] positionTwo = {(position[0]-1), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
-				System.out.println("car position 1");
+				//System.out.println("car position 1");
 				return true;
 			} else {
 				return false;
@@ -224,16 +227,16 @@ public class Parser {
 		} else if (current == neighbors[2]){
 			int[] positionTwo = {(position[0]+1), position[1]};
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
-				System.out.println("car position 2");
+				//System.out.println("car position 2");
 				return true;
 			} else {
 				return false;
 			}
 		} else if (current == neighbors[4]){
 			int[] positionTwo = {position[0], (position[1]-1)};
-			System.out.println(positionTwo[0] + "," + positionTwo[1]);
+			//System.out.println(positionTwo[0] + "," + positionTwo[1]);
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
-				System.out.println("car position 3");
+				//System.out.println("car position 3");
 				return true;
 			} else {
 				return false;
@@ -241,7 +244,7 @@ public class Parser {
 		} else if (current == neighbors[6]){
 			int[] positionTwo = {position[0], (position[1]+1)};
 			if(!letterExistsElsewhere(current, position, positionTwo, null)){
-				System.out.println("car position 4");
+				//System.out.println("car position 4");
 				return true;
 			} else {
 				return false;
@@ -277,7 +280,7 @@ public class Parser {
 					continue;
 				} else {
 					if (this.grid[i][j] == current){
-						System.out.println("Comparing current character to: " + this.grid[i][j]);
+						//System.out.println("Comparing current character to: " + this.grid[i][j]);
 						return true;
 					}
 				}

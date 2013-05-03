@@ -12,7 +12,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String gridString = "bbxxxc\nexxdxc\neAAdxc\nexxdxx\nfxxxgg\nfxhhhx\n";
+		String gridString = GridStrings.getRandomGrid();
 		Parser parser = new Parser(gridString);
 		if(parser.fileCanCreateGrid()){
 			//Grid grid = parser.createGrid();
