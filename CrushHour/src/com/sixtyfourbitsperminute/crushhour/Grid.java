@@ -185,16 +185,21 @@ public class Grid {
 						   {'x', 'x', 'x', 'x', 'x', 'x'}};
 		for(char c : this.vehicles.keySet()){
 			Vehicle current = vehicles.get(c);
+			System.out.println(c);
 			ArrayList<Coordinate> coveredPositions = current.getCoveredCoordinates();
+			System.out.println("Position x: " + current.getPosition().x + ", Position y: " + current.getPosition().y);
+			System.out.println("Orientation: " + current.horizontal);
 			for(int i = 0; i < coveredPositions.size(); i++){
 				Coordinate currentCoordinate = coveredPositions.get(i);
+				System.out.println("x: " + currentCoordinate.x + ", y: " + currentCoordinate.y);
 				result[currentCoordinate.x][currentCoordinate.y] = c;
 			}
 		}
 		String resultString = "";
 		for(int i = 0; i < 6; i++){
-			for(int j = 0; i < 6; j++){
-				resultString = resultString + result[i][j];
+			for(int j = 0; j < 6; j++){
+				resultString = resultString + result[j][i];
+				System.out.println(resultString);
 			}
 		}
 		

@@ -16,7 +16,7 @@ public class GridStrings {
 	 */
 	static String[] possibleGrids = {
 			"bbxxxcZdxxexcZdAAexcZdxxexxZfxxxggZfxhhhxZ",
-			"bxxcccZbxxdxeZAAxdfeZfffxfeZxxhxiiZjjhkkxZ",
+			"bxxcccZbxxdxeZAAxdfeZgggxfeZxxhxiiZjjhkkxZ",
 			"xxxxxxZxxxxxxZxAAbxxZxccbxdZxexbxdZxeffxdZ",
 			"bxxcxxZbxxcxxZbAAcxxZxxdeeeZxxdxxfZxxgggfZ",
 			"bbxcxdZexxcfdZeAAcfgZehhhfgZixxxjjZixxxkkZ",

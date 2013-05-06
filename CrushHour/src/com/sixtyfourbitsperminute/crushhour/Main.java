@@ -22,20 +22,21 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		Communicator communicator = new Communicator();
+		//Communicator communicator = new Communicator();
 		
 	
 	
-		if(!communicator.portsAreValid()){
-			System.exit(0);
-		}
+//		if(!communicator.portsAreValid()){
+//			System.exit(0);
+//		}
 		
 		
-		String gridString = GridStrings.getRandomGrid();
+		String gridString = GridStrings.getGrid(1);
 		Parser parser = new Parser(gridString);
 		if(parser.fileCanCreateGrid()){
-			//Grid grid = parser.createGrid();
+			Grid grid = parser.createGrid();
 			System.out.println("Created grid");
+			System.out.println(grid.gridToString());
 		}
 		
 		//send test message
@@ -57,14 +58,14 @@ public class Main {
 		
 		
 		
-		for(;;){
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		for(;;){
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 }

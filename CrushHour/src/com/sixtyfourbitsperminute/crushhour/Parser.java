@@ -338,9 +338,9 @@ public class Parser {
 	public void addVehicleToMap(char current, boolean direction, int[] position, int length){
 		Vehicle vehicle;
 		if(length == 3){
-			vehicle = new Truck(direction, position[0], position[1]);
+			vehicle = new Truck(direction, position[1], position[0]);
 		} else {
-			vehicle = new Car(direction, position[0], position[1]);
+			vehicle = new Car(direction, position[1], position[0]);
 		}
 		if(!vehicleMap.containsKey(current)){
 			vehicleMap.put(current, vehicle);

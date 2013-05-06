@@ -10,11 +10,6 @@ package com.sixtyfourbitsperminute.crushhour;
 public class Truck extends Vehicle{
 	
 	/**
-	 * A variable holding the length of the truck
-	 */
-	int length = 3;
-
-	/**
 	 * This is a constructor for this class. It takes a boolean that tells you 
 	 * whether or not the truck is horizontally or vertically placed, and a coordinate 
 	 * that gives the top most or left most position of the truck on the grid.
@@ -26,6 +21,7 @@ public class Truck extends Vehicle{
 	public Truck (boolean direction, Coordinate position){
 		this.horizontal = direction;
 		this.position = new Coordinate(position.x, position.y);
+		this.length = 3;
 	}
 	
 	/**
@@ -40,5 +36,6 @@ public class Truck extends Vehicle{
 	public Truck (boolean direction, int xPosition, int yPosition){
 		this.horizontal = direction;
 		this.position = new Coordinate(xPosition, yPosition);
+		this.length = 3;
 	}
 }
