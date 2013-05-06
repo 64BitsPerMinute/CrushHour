@@ -27,6 +27,11 @@ public class Vehicle {
 	 * A Coordinate containing the position of the vehicle on the grid.
 	 */
 	Coordinate position;
+	
+	/**
+	 * An identifier character for the vehicle.
+	 */
+	char identifier;
 
 	/**
 	 * This method returns the position of the vehicle on the grid.

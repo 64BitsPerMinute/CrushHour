@@ -18,10 +18,11 @@ public class Truck extends Vehicle{
 	 * @param position A coordinate that holds the top most or left most position 
 	 * of the truck. 
 	 */
-	public Truck (boolean direction, Coordinate position){
+	public Truck (boolean direction, Coordinate position, char identifier){
 		this.horizontal = direction;
 		this.position = new Coordinate(position.x, position.y);
 		this.length = 3;
+		this.identifier = identifier;
 	}
 	
 	/**
@@ -33,9 +34,10 @@ public class Truck extends Vehicle{
 	 * @param xPosition An integer holding the x position of the truck. 
 	 * @param yPosition An interger holding the y postion of the truck. 
 	 */
-	public Truck (boolean direction, int xPosition, int yPosition){
+	public Truck (boolean direction, int xPosition, int yPosition, char identifier){
 		this.horizontal = direction;
 		this.position = new Coordinate(xPosition, yPosition);
 		this.length = 3;
+		this.identifier = identifier;
 	}
 }

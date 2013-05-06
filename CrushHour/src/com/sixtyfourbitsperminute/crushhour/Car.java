@@ -18,10 +18,11 @@ public class Car extends Vehicle {
 	 * @param position A coordinate that holds the top most or left most position 
 	 * of the car. 
 	 */
-	public Car (boolean direction, Coordinate position){
+	public Car (boolean direction, Coordinate position, char identifier){
 		this.horizontal = direction;
 		this.position = new Coordinate(position.x, position.y);
 		this.length = 2;
+		this.identifier = identifier;
 	}
 	
 	/**
@@ -33,9 +34,10 @@ public class Car extends Vehicle {
 	 * @param xPosition An integer holding the x position of the car. 
 	 * @param yPosition An interger holding the y postion of the car. 
 	 */
-	public Car (boolean direction, int xPosition, int yPosition){
+	public Car (boolean direction, int xPosition, int yPosition, char identifier){
 		this.horizontal = direction;
 		this.position = new Coordinate(xPosition, yPosition);
 		this.length = 2;
+		this.identifier = identifier;
 	}
 }
