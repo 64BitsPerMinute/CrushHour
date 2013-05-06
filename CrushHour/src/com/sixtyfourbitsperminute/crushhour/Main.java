@@ -31,7 +31,8 @@ public class Main {
 //		}
 		
 		
-		String gridString = GridStrings.getGrid(1);
+		//String gridString = GridStrings.getGrid(1);
+		String gridString = "bxxcccZbxxdxeZAAxdfeZgggxfeZxxhxiiZjjhkkxZ";
 		Parser parser = new Parser(gridString);
 		if(parser.fileCanCreateGrid()){
 			Grid grid = parser.createGrid();

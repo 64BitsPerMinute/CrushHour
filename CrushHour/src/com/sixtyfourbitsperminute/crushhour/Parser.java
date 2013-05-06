@@ -59,7 +59,12 @@ public class Parser {
 		for(int i = 0; i < gridLines.length; i++){
 			gridLines[i].trim();
 		}
-		if(gridLines[0].length() == gridLines.length){
+		if(gridLines[0].length() == gridLines.length && 
+				gridLines[1].length() == gridLines.length &&
+				gridLines[2].length() == gridLines.length &&
+				gridLines[3].length() == gridLines.length &&
+				gridLines[4].length() == gridLines.length &&
+				gridLines[4].length() == gridLines.length){
 			//System.out.println("Inside if statement in isSquareGrid.");
 			this.gridLines = gridLines;
 			this.gridSize = gridLines.length;
@@ -274,6 +279,9 @@ public class Parser {
 				if(positionThree == null){
 					if((i == positionOne[0] && j == positionOne[1]) || (i == positionTwo[0] && j == positionTwo[1])){
 						continue;
+					} else if (this.grid[i][j] == current){
+						//System.out.println("Comparing current character to: " + this.grid[i][j]);
+						return true;
 					}
 				} else if ((i == positionOne[0] && j == positionOne[1]) || (i == positionTwo[0] && j == positionTwo[1]) 
 						|| (i == positionThree[0] && j == positionThree[1])){
