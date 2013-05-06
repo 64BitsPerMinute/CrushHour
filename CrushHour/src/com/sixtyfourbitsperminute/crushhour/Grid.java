@@ -191,7 +191,14 @@ public class Grid {
 				result[currentCoordinate.x][currentCoordinate.y] = c;
 			}
 		}
-		return result.toString();
+		String resultString = "";
+		for(int i = 0; i < result.length; i++){
+			for(int j = 0; i < result.length; j++){
+				resultString = resultString + result[i][j];
+			}
+		}
+		
+		return resultString;
 	}
 
 }
