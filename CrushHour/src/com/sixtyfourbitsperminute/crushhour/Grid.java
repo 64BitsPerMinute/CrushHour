@@ -192,8 +192,8 @@ public class Grid {
 			}
 		}
 		String resultString = "";
-		for(int i = 0; i < result.length; i++){
-			for(int j = 0; i < result.length; j++){
+		for(int i = 0; i < 6; i++){
+			for(int j = 0; i < 6; j++){
 				resultString = resultString + result[i][j];
 			}
 		}
