@@ -22,6 +22,15 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
+		Communicator communicator = new Communicator();
+		
+	
+	
+		if(!communicator.portsAreValid()){
+			System.exit(0);
+		}
+		
+		
 		String gridString = GridStrings.getRandomGrid();
 		Parser parser = new Parser(gridString);
 		if(parser.fileCanCreateGrid()){
@@ -30,34 +39,24 @@ public class Main {
 		}
 		
 		//send test message
-		OSCPortOut sender = null;
-		OSCPortIn reciever = null;
-		try {
-			sender = new OSCPortOut();
-			reciever = new OSCPortIn(57111);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
-		Object payload[] = new Object[1];
-		payload[0] = "bbxxxcexxdxceAAdxcexxdxxfxxxggfxhhhx";
-		OSCMessage mesg = new OSCMessage("/ch/grid", payload);
-			try {
-				sender.send(mesg);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
+		
+		
+//		Object payload[] = new Object[1];
+//		payload[0] = "bbxxxcexxdxceAAdxcexxdxxfxxxggfxhhhx";
+//		OSCMessage mesg = new OSCMessage("/ch/grid", payload);
+//			try {
+//				sender.send(mesg);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
-		reciever.addListener("/input", new OSCListener() {
-			
-			@Override
-			public void acceptMessage(Date time, OSCMessage message) {
-				System.out.println((Float)message.getArguments()[0]);
-			}
-		});
-		reciever.startListening();
+		
+		
+		
+		
+		
 		for(;;){
 			try {
 				Thread.sleep(500);

@@ -54,7 +54,7 @@ public class Parser {
 		if(this.gridString.length() == 0){
 			return false;
 		}
-		String[] gridLines = this.gridString.split("\n");
+		String[] gridLines = this.gridString.split("Z");
 		//System.out.println(gridLines);
 		for(int i = 0; i < gridLines.length; i++){
 			gridLines[i].trim();
