@@ -22,24 +22,36 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		//Communicator communicator = new Communicator();
+		Communicator communicator = new Communicator();
 		
-	
+		communicator.startListening();
 	
 //		if(!communicator.portsAreValid()){
-//			System.exit(0);
+//			System.out.println("Invalid Ports!");
+//			System.exit(1);
 //		}
+//		
 		
-		
-		//String gridString = GridStrings.getGrid(1);
-		String gridString = "bxxcccZbxxdxeZAAxdfeZgggxfeZxxhxiiZjjhkkxZ";
-		Parser parser = new Parser(gridString);
-		if(parser.fileCanCreateGrid()){
-			Grid grid = parser.createGrid();
-			System.out.println("Created grid");
-			System.out.println(grid.gridToString());
-		}
-		
+//		//String gridString = GridStrings.getGrid(1);
+//		String gridString = "bxxcccZbxxdxeZAAxdfeZgggxfeZxxhxiiZjjhkkxZ";
+////		String gridString = "xxxxxxZxxxxxbZAAxxxbZxxxxxxZxxxxxxZxxxxxxZ";
+//		Parser parser = new Parser(gridString);
+//		if(parser.fileCanCreateGrid()){
+//			Grid grid = parser.createGrid();
+//			System.out.println("Created grid");
+//			System.out.println(grid.gridToString());
+//			communicator.sendToGrid(grid.gridToString());
+//			Solver solve = new Solver();
+//			Grid g = solve.bruteForce(grid);
+//			if(g!=null){
+//				System.out.println("Solution: " + g.gridToString());
+//				communicator.sendToGrid(g.gridToString());
+//			}else{
+//				System.out.println("Solution not found");
+//			}
+//		}
+//		
+//		
 		//send test message
 		
 		
@@ -59,14 +71,17 @@ public class Main {
 		
 		
 		
-//		for(;;){
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		for(;;){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+//		communicator.tearDown();
+//		System.exit(1);
 	}
+	
 
 }

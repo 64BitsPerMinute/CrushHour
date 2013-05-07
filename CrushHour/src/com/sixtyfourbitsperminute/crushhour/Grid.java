@@ -1,6 +1,7 @@
 package com.sixtyfourbitsperminute.crushhour;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
@@ -36,9 +37,10 @@ public class Grid {
 	 * @param vehicles A HashMap containing the list of vehicles and their characters.
 	 * @param gridSize An integer containing the size of the grid.
 	 */
-	public Grid(HashMap<Character, Vehicle> vehicles, int gridSize) {
+	public Grid(HashMap<Character, Vehicle> vehicles, int gridSize, ArrayList<Grid> previousGrids) {
 		this.vehicles = vehicles;
 		this.gridSize = gridSize;
+		this.previousGrids = previousGrids;
 	}
 
 	/**
@@ -47,9 +49,27 @@ public class Grid {
 	 * @param object
 	 * @return
 	 */
-	public Grid executeMove(Object object) {
-
-		return null;
+	public Grid executeMove(Move move) {
+		HashMap<Character, Vehicle> newVehicles = new HashMap<Character, Vehicle>(vehicles);
+		ArrayList<Grid> newPreviousGrids = new ArrayList<Grid>(previousGrids);
+		newPreviousGrids.add(this);
+		Vehicle v = newVehicles.get(move.getVehicle().identifier);
+		Coordinate modifiedPosition = new Coordinate(v.getPosition().x,v.getPosition().y);
+		if(v.horizontal){
+			modifiedPosition.x+=move.steps;
+		}else{
+			modifiedPosition.y+=move.steps;
+		}
+		if(v.length==2){
+			Car c = new Car(v.horizontal, modifiedPosition, v.identifier);
+			newVehicles.put(c.identifier, c);
+		} else {
+			Truck t = new Truck(v.horizontal, modifiedPosition, v.identifier);
+			newVehicles.put(t.identifier, t);
+		}
+		
+	
+		return new Grid(newVehicles,gridSize,newPreviousGrids);
 	}
 
 	/**
@@ -107,8 +127,10 @@ public class Grid {
 	 */
 	public ArrayList<Coordinate> getCoveredCoordinatesExcludingVehicle(Vehicle v) {
 		ArrayList<Coordinate> coveredCoordinates = new ArrayList<Coordinate>();
-		for (Character key : getVehicles().keySet()) {
+		for (Character key : getVehicles().keySet()){
+			if(key!=v.identifier){
 			coveredCoordinates.addAll(getVehicles().get(key).getCoveredCoordinates());
+		}
 		}
 		coveredCoordinates.removeAll(v.getCoveredCoordinates());
 		return coveredCoordinates;
@@ -164,12 +186,24 @@ public class Grid {
 	 */
 	public boolean playerCanExit() {
 		Car player = (Car) vehicles.get('A');
+		ArrayList<Coordinate> coords = this.getCoveredCoordinatesExcludingVehicle(player);
 		for (int i = player.position.x; i < gridSize; i++) {
-
+			if(coords.contains(new Coordinate(i, player.position.y))){
+				return false;
+			}
 		}
-		return false;
+		return true;
 	}
 	
+	public Grid nullIfPreviousState(){
+		String thisState = this.gridToString();
+		for(Grid g: previousGrids){
+			if(thisState.equals(g.gridToString())){
+				return null;
+			}
+		}
+		return this;
+	}
 	/**
 	 * This method turns the list of vehicles associated with a grid into a String 
 	 * complete with x's for empty spots so that the grid can be handed over to 
@@ -192,13 +226,13 @@ public class Grid {
 			for(int i = 0; i < coveredPositions.size(); i++){
 				Coordinate currentCoordinate = coveredPositions.get(i);
 				//System.out.println("x: " + currentCoordinate.x + ", y: " + currentCoordinate.y);
-				result[currentCoordinate.x][currentCoordinate.y] = c;
+				result[currentCoordinate.y][currentCoordinate.x] = c;
 			}
 		}
 		String resultString = "";
 		for(int i = 0; i < 6; i++){
 			for(int j = 0; j < 6; j++){
-				resultString = resultString + result[j][i];
+				resultString = resultString + result[i][j];
 				//System.out.println(resultString);
 			}
 		}

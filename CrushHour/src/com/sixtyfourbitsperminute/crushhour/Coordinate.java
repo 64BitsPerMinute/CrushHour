@@ -26,8 +26,8 @@ public class Coordinate {
 	 * @param y The integer that will be mapped to the y value. 
 	 */
 	public Coordinate(int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.x = new Integer(x);
+		this.y = new Integer(y);
 	}
 
 	/**
@@ -63,6 +63,13 @@ public class Coordinate {
 		if (y != other.y)
 			return false;
 		return true;
+	}
+
+	public boolean isWithinGrid(Grid grid) {
+		if(x>=0 && y>=0 && x<grid.getGridSize() && y<grid.getGridSize()){
+			return true;
+		}
+		return false;
 	}
 
 	

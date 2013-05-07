@@ -1,5 +1,6 @@
 package com.sixtyfourbitsperminute.crushhour;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -387,11 +388,11 @@ public class Parser {
 	 */
 	public boolean fileCanCreateGrid(){
 		if(isSquareGrid()){
-			System.out.println("is square");
+//			System.out.println("is square");
 			if(allVehiclesAreLegal()){
-				System.out.println("all vehicles legal");
+//				System.out.println("all vehicles legal");
 				if(gridHasUserCar()){
-					System.out.println("has user car");
+//					System.out.println("has user car");
 					return true;
 				} else {
 					return false;
@@ -412,7 +413,8 @@ public class Parser {
 	public Grid createGrid(){
 		Grid grid = null;
 		if(fileCanCreateGrid()){
-			grid = new Grid(this.vehicleMap, this.gridSize);
+			grid = new Grid(this.vehicleMap, this.gridSize, new ArrayList<Grid>());
+			grid.previousGrids.add(grid);
 		}
 		return grid;
 	}

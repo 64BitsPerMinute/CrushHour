@@ -45,17 +45,87 @@ public class Communicator {
 				Parser parser = new Parser(mes);
 				if(parser.fileCanCreateGrid()){
 					currentPuzzle = parser.createGrid();
-					OSCMessage message1 = new OSCMessage("/ch/grid");
-					message1.addArgument(currentPuzzle.gridToString());
-					send(message1);
+					sendToGrid(currentPuzzle.gridToString());
+					Solver s = new Solver();
+					Grid solved = s.bruteForce(currentPuzzle);
+					if(solved != null){
+						solved.previousGrids.add(solved);
+						System.out.println("Solved User Puzzle");
+						sendToGrid(solved.gridToString());
+						sendToMaxSteps(solved.previousGrids.size());
+						currentPuzzle = solved;
+					}else{
+						System.out.print("I can't solve that! ");
+					}
+				} else {
+					System.out.print("I can't parse that! ");
+				}
+			}
+		});
+		reciever.addListener("/presetnumber", new OSCListener() {
+			@Override
+			public void acceptMessage(Date time, OSCMessage message) {
+				int mes = ((Integer)message.getArguments()[0]);
+				//mes.concat("\n");
+				//mes = mes + "Z";
+				System.out.println("Solving Preset Number " + mes);
+				Parser parser = new Parser(GridStrings.getGrid(mes-1));
+				if(parser.fileCanCreateGrid()){
+					
+					currentPuzzle = parser.createGrid();
+					sendToGrid(currentPuzzle.gridToString());
+					Solver s = new Solver();
+					Grid solved = s.bruteForce(currentPuzzle);
+					if(solved != null){
+						solved.previousGrids.add(solved);
+						System.out.println("Solved Preset Number " + mes);
+						sendToGrid(solved.gridToString());
+						sendToMaxSteps(solved.previousGrids.size());
+						currentPuzzle = solved;
+					}else{
+						System.out.print("I can't solve that! ");
+					}
 					
 				} else {
 					System.out.print("I can't parse that! ");
 				}
 			}
 		});
-		reciever.startListening();
+		reciever.addListener("/stepnumber", new OSCListener() {
+			@Override
+			public void acceptMessage(Date time, OSCMessage message) {
+				int mes = ((Integer)message.getArguments()[0]);
+				//mes.concat("\n");
+				//mes = mes + "Z";
+				System.out.println("Showing Step Number " + mes);
+				if(currentPuzzle.previousGrids.size()<mes){
+					System.out.print("Index Out Of Bounds!");
+					return;
+				}
+				sendToGrid(currentPuzzle.previousGrids.get(mes-1).gridToString());
+			}
+		});
 		
+	}
+	
+	public void sendToMaxSteps(int maxNumberOfSteps) {
+		OSCMessage message1 = new OSCMessage("/ch/maxsteps");
+		message1.addArgument(maxNumberOfSteps);
+		send(message1);
+		
+	}
+	
+	public void sendToMaxSolutions(int maxNumberOfSolutions) {
+		OSCMessage message1 = new OSCMessage("/ch/maxsolutions");
+		message1.addArgument(maxNumberOfSolutions);
+		send(message1);
+		
+	}
+
+	public void sendToGrid(String stringToSend){
+		OSCMessage message1 = new OSCMessage("/ch/grid");
+		message1.addArgument(stringToSend);
+		send(message1);
 	}
 	
 	private void send(OSCMessage oscMessage){
@@ -73,5 +143,17 @@ public class Communicator {
 			return false;
 		}
 		return true;
+	}
+
+	
+	public void startListening(){
+		reciever.startListening();
+	}
+	public void tearDown() {
+//		sender.close();
+//		reciever.stopListening();
+//		reciever.close();
+
+		
 	}
 }

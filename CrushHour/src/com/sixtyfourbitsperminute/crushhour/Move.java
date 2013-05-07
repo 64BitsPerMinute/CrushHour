@@ -35,7 +35,7 @@ public class Move {
 	 */
 	public Move (Vehicle vehicle, int steps, int gridSize){
 		this.vehicle = vehicle;
-		this.steps = steps;
+		this.steps = new Integer(steps);
 		this.gridSize = gridSize;
 	}
 
@@ -69,9 +69,9 @@ public class Move {
 		} else {
 			moveable = this.vehicle.position.y;
 		}
-		if(moveable + this.steps + this.vehicle.length < this.gridSize && steps > 0){
+		if(moveable + this.steps + (this.vehicle.length-1) < this.gridSize && steps > 0){
 			return true;
-		} else if (moveable + this.steps > 0 && steps < 0){
+		} else if (moveable + this.steps >= 0 && steps < 0){
 			return true;
 		} else {
 			return false;

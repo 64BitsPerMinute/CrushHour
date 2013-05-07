@@ -15,7 +15,7 @@ public class Solver {
 	/**
 	 * A HashMap containing the list of vehicles on the grid.
 	 */
-	HashMap<Character, Vehicle> vehicles;
+	
 	
 	/**
 	 * This method checks every move on the grid, for every vehicle, executes 
@@ -25,7 +25,10 @@ public class Solver {
 	 * @return The solved grid, if it is solvable. 
 	 */
 	public Grid bruteForce(Grid grid) {
-		vehicles = grid.getVehicles();
+		if(grid == null){
+			return null;
+		}
+		HashMap<Character, Vehicle> vehicles = grid.getVehicles();
 		if (grid.playerCanExit()) {
 			return grid;
 		}
@@ -37,9 +40,9 @@ public class Solver {
 				continue;
 			}
 			for (int j = 0; j < moves.size(); j++) {
-				Grid g = bruteForce(grid.executeMove(moves.get(j)));
+				Grid g = bruteForce(grid.executeMove(moves.get(j)).nullIfPreviousState());
 				if (g != null) {
-					return grid;
+					return g;
 				}
 			}
 		}

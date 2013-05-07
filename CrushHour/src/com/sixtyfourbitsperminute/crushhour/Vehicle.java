@@ -73,17 +73,48 @@ public class Vehicle {
 		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		HashMap<Character, Vehicle> vehicles = grid.getVehicles();
 		int gridSize = grid.getGridSize();
+		ArrayList<Coordinate> gridCovered = grid.getCoveredCoordinatesExcludingVehicle(this);
 		if(horizontal){
-			for(int x = 0;x<gridSize;x++){
+			for(int x = position.x+1;x<gridSize;x++){
+				if(gridCovered.contains(new Coordinate(x,position.y))){
+					break;
+				}
+				if(x<5&&x>=0){
+					possibleMoves.add(new Move(this, x-position.x, gridSize));
+				}
+			}
+			for(int x = position.x-1;x>=0;x--){
+				if(gridCovered.contains(new Coordinate(x,position.y))){
+					break;
+				}
+				if(x<5&&x>=0){
 				possibleMoves.add(new Move(this, x-position.x, gridSize));
+				}
 			}
 		} else {
-			for(int y = 0;y<gridSize;y++){
+			for(int y = position.y+1;y<gridSize;y++){
+				if(gridCovered.contains(new Coordinate(position.x,y))){
+					break;
+				}
+				if(y<5&&y>=0){
 				possibleMoves.add(new Move(this, y-position.y, gridSize));
+				}
+			}
+			for(int y = position.y-1;y>=0;y--){
+				if(gridCovered.contains(new Coordinate(position.x,y))){
+					break;
+				}
+				if(y<5&&y>=0){
+				possibleMoves.add(new Move(this, y-position.y, gridSize));
+				}
 			}
 		}
+		
+		if(possibleMoves.size()==0){
+			return possibleMoves;
+		}
 		for (Iterator<Move> it=possibleMoves.iterator(); it.hasNext();) {
-		    if ((!it.next().doesNotSurpassGrid())||it.next().getSteps()==0){
+		    if ((!it.next().doesNotSurpassGrid())){
 		        it.remove(); 		    	
 		    }
 		}
@@ -91,7 +122,7 @@ public class Vehicle {
 		for (Iterator<Move> it=possibleMoves.iterator(); it.hasNext();) {
 			boolean coordinateContained = false;
 			for(Coordinate c : this.getCoveredCoordinatesAfterMove(it.next())){
-				if(gridCoveredCoordinates.contains(c)){
+				if(gridCoveredCoordinates.contains(c)||(!c.isWithinGrid(grid))){
 					coordinateContained = true;
 				}
 			}
@@ -99,6 +130,22 @@ public class Vehicle {
 				it.remove();
 			}
 		}		
+//		for (Iterator<Move> it=possibleMoves.iterator(); it.hasNext();) {
+//			Move m = it.next();
+//			if(m.steps==4||m.steps==-4){
+//				for(Coordinate c : grid.getCoveredCoordinatesExcludingVehicle(this)){
+//					if(horizontal){
+//						if(c.y==this.position.y&&c.x==3){
+//							it.remove();
+//						}
+//					}else{
+//						if(c.x==this.position.x&&c.y==3){
+//							it.remove(); //Catch Jumps
+//						}
+//					}
+//				}
+//			}
+//		}
 		return possibleMoves;
 	}
 
