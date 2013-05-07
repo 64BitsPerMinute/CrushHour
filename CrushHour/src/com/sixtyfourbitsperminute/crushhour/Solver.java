@@ -2,6 +2,8 @@ package com.sixtyfourbitsperminute.crushhour;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author Jonathan Thompson
@@ -12,11 +14,6 @@ import java.util.HashMap;
  */
 public class Solver {
 
-	/**
-	 * A HashMap containing the list of vehicles on the grid.
-	 */
-	
-	
 	/**
 	 * This method checks every move on the grid, for every vehicle, executes 
 	 * each and recursively checks the resultant grid for a brute force solution 
@@ -47,5 +44,33 @@ public class Solver {
 			}
 		}
 		return null;
-	}	
+	}
+	
+	public Grid BFS (Grid grid){
+		if(grid == null){
+			return null;
+		}
+		if (grid.playerCanExit()) {
+			return grid;
+		}
+		Queue<Grid> queue = new LinkedList<Grid>();
+		queue.add(grid);
+		while(!queue.isEmpty()) {
+			Grid parent = queue.remove();
+			Grid child = null;
+			for(char c : parent.vehicles.keySet()){
+				Vehicle current = parent.vehicles.get(c);
+				ArrayList<Move> currentMoves = current.getPossibleMoves(parent);
+				for(int i = 0; i < currentMoves.size(); i++){
+					child = parent.executeMove(currentMoves.get(i));
+					if(child.playerCanExit()){
+						return child;
+					} else if(!queue.contains(child)){
+						queue.add(child);
+					}
+				}
+			}
+		}
+		return null;
+	}
 }
