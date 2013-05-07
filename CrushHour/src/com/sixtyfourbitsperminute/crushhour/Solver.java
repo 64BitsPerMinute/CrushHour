@@ -72,11 +72,15 @@ public class Solver {
 				Vehicle current = parent.vehicles.get(c);
 				ArrayList<Move> currentMoves = current.getPossibleMoves(parent);
 				for(int i = 0; i < currentMoves.size(); i++){
-					child = parent.executeMove(currentMoves.get(i));
-					if(child.playerCanExit()){
-						return child;
-					} else if(!queue.contains(child)){
-						queue.add(child);
+					if(parent.executeMove(currentMoves.get(i)).nullIfPreviousState() == null){
+						continue;
+					} else {
+						child = parent.executeMove(currentMoves.get(i));
+						if(child.playerCanExit()){
+							return child;
+						} else if(!queue.contains(child)){
+							queue.add(child);
+						}
 					}
 				}
 			}
