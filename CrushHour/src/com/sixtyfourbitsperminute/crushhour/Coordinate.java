@@ -65,6 +65,13 @@ public class Coordinate {
 		return true;
 	}
 
+	/**
+	 * This method checks to ensure that the current coordinate falls within the 
+	 * bounds of the grid, to ensure that a vehicle is not, nor is not about to 
+	 * move outside of the grid.
+	 * @param grid The grid that the coordinate is being checked against.
+	 * @return Whether or not the coordinate is inside the grid.
+	 */
 	public boolean isWithinGrid(Grid grid) {
 		if(x>=0 && y>=0 && x<grid.getGridSize() && y<grid.getGridSize()){
 			return true;

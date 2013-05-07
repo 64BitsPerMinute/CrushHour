@@ -10,11 +10,34 @@ import com.illposed.osc.OSCMessage;
 import com.illposed.osc.OSCPortIn;
 import com.illposed.osc.OSCPortOut;
 
+/**
+ * @author Jonathan Thompson
+ * @author Kelly Croswell
+ * 
+ * This class is the one that does all of the relaying of messages back and forth 
+ * between the Java program and the Max MSP GUI. 
+ */
 public class Communicator {
+	/**
+	 * A Grid containing the puzzle to be solved.
+	 */
 	Grid currentPuzzle = null;
+	
+	/**
+	 * The port of the sender.
+	 */
 	OSCPortOut sender = null;
+	
+	/**
+	 * The port of the reciever.
+	 */
 	OSCPortIn reciever = null;
 
+	/**
+	 * This is the constructor method for this class. It initializes the ports 
+	 * and adds the listeners to various GUI elements so that the program can 
+	 * respond appropriately to activity from the user.
+	 */
 	public Communicator() {
 		try {
 			sender = new OSCPortOut();
@@ -28,6 +51,13 @@ public class Communicator {
 		this.addListeners();
 	}
 	
+	/**
+	 * This method adds all of the listeners that are set up on the GUI to the 
+	 * Java program so that anytime the user interacts with the GUI in a meaningful 
+	 * way the Java program can respond with the appropriate information. This is 
+	 * mainly used to send puzzles back and forth when a puzzle is selected, solved, 
+	 * and the solution scrolled through.
+	 */
 	private void addListeners() {
 		reciever.addListener("/input", new OSCListener() {
 			@Override
@@ -47,7 +77,8 @@ public class Communicator {
 					currentPuzzle = parser.createGrid();
 					sendToGrid(currentPuzzle.gridToString());
 					Solver s = new Solver();
-					Grid solved = s.bruteForce(currentPuzzle);
+					//Grid solved = s.bruteForce(currentPuzzle);
+					Grid solved = s.BFS(currentPuzzle);
 					if(solved != null){
 						solved.previousGrids.add(solved);
 						System.out.println("Solved User Puzzle");
@@ -75,7 +106,8 @@ public class Communicator {
 					currentPuzzle = parser.createGrid();
 					sendToGrid(currentPuzzle.gridToString());
 					Solver s = new Solver();
-					Grid solved = s.bruteForce(currentPuzzle);
+					//Grid solved = s.bruteForce(currentPuzzle);
+					Grid solved = s.BFS(currentPuzzle);
 					if(solved != null){
 						solved.previousGrids.add(solved);
 						System.out.println("Solved Preset Number " + mes);
@@ -108,6 +140,11 @@ public class Communicator {
 		
 	}
 	
+	/**
+	 * This method sends the number of steps a solution has to the GUI to be 
+	 * printed out as data for the user.
+	 * @param maxNumberOfSteps The number of steps the solution contains.
+	 */
 	public void sendToMaxSteps(int maxNumberOfSteps) {
 		OSCMessage message1 = new OSCMessage("/ch/maxsteps");
 		message1.addArgument(maxNumberOfSteps);
@@ -115,6 +152,11 @@ public class Communicator {
 		
 	}
 	
+	/**
+	 * This method sends the number of solutions a puzzle has to the GUI to be 
+	 * relayed as data for the user. No longer a part of interface.
+	 * @param maxNumberOfSolutions The number of solutions the puzzle has.
+	 */
 	public void sendToMaxSolutions(int maxNumberOfSolutions) {
 		OSCMessage message1 = new OSCMessage("/ch/maxsolutions");
 		message1.addArgument(maxNumberOfSolutions);
@@ -122,12 +164,22 @@ public class Communicator {
 		
 	}
 
+	/**
+	 * This method sends a String containing a grid to the GUI to be interpreted 
+	 * and displayed. 
+	 * @param stringToSend A string containg the Grid to be sent.
+	 */
 	public void sendToGrid(String stringToSend){
 		OSCMessage message1 = new OSCMessage("/ch/grid");
 		message1.addArgument(stringToSend);
 		send(message1);
 	}
 	
+	/**
+	 * This method is the one that actually sends a packet to the Max GUI to be 
+	 * interpreted and displayed appropriately. 
+	 * @param oscMessage The message to be sent to the GUI.
+	 */
 	private void send(OSCMessage oscMessage){
 		try {
 			sender.send(oscMessage);
@@ -138,22 +190,33 @@ public class Communicator {
 		}
 	}
 
+	/**
+	 * This method checks to see if the ports that the sender and reciever are 
+	 * using are valid and usable. 
+	 * @return Whether or not the ports are usable.
+	 */
 	public boolean portsAreValid(){
 		if(reciever == null || sender == null){
 			return false;
 		}
 		return true;
 	}
-
 	
+	/**
+	 * This is the method that starts up the reciever so that the user execute 
+	 * actions in the GUI
+	 */
 	public void startListening(){
 		reciever.startListening();
 	}
+	
+	/**
+	 * This method is the tear down method for the Communicator, which closes the 
+	 * ports and shuts down the reciever.
+	 */
 	public void tearDown() {
 //		sender.close();
 //		reciever.stopListening();
 //		reciever.close();
-
-		
 	}
 }

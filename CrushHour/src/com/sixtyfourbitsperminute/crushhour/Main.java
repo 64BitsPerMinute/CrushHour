@@ -12,15 +12,16 @@ import com.illposed.osc.*;
  * @author Jonathan Thompson
  * @author Kelly Croswell
  * 
- * This is the main method of the program, where the heavy lifting happens.
+ * This is the main method of the program. It calls the class that does the heavy 
+ * lifting for the program and was used for testing purposes.
  */
-public class Main {
-
+public class Main {	
+	
 	/**
-	 * @param args
+	 * This method opens up an instance of the Communicator, which talks to our 
+	 * GUI, written in Max MSP.
+	 * @param args Command line parameters
 	 */
-	
-	
 	public static void main(String[] args) {
 		Communicator communicator = new Communicator();
 		

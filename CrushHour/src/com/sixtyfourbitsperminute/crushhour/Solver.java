@@ -46,6 +46,16 @@ public class Solver {
 		return null;
 	}
 	
+	/**
+	 * This method implements a simple, non recursive breadth first search algorithm 
+	 * as an alternative way to search a Rush Hour Grid for a solution. It does this 
+	 * by adding a "root" grid to a queue, then adding each child of the root grid to 
+	 * the queue as well. In this case, a child of the root grid is each move that can 
+	 * be executed from each vehicle on the grid. These children are then evaluated in 
+	 * turn providing us not only with a solution, but the shortest path solution.
+	 * @param grid The grid to be evaluated.
+	 * @return The solved grid with a list of steps.
+	 */
 	public Grid BFS (Grid grid){
 		if(grid == null){
 			return null;

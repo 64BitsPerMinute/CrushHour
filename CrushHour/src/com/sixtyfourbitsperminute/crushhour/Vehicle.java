@@ -228,4 +228,53 @@ public class Vehicle {
 		return "[" + this.position.x + ", " + this.position.y + "], " + this.horizontal; 
 	}
 
+	
+	/**
+	 * This method overrides the hashCode() method in order to ensure that vehicles 
+	 * in a list or map can be found using the .contains() method.
+	 * @return an int containing the hash code
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (horizontal ? 1231 : 1237);
+		result = prime * result + identifier;
+		result = prime * result + length;
+		result = prime * result
+				+ ((position == null) ? 0 : position.hashCode());
+		return result;
+	}
+
+	
+	/**
+	 * This method overrides the equals() method in order to ensure that vehicles 
+	 * can be found in a list or map using the .contains() method.
+	 * @param obj The vehicle to be compared to.
+	 * @return Whether or not the two vehicles are a match.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vehicle other = (Vehicle) obj;
+		if (horizontal != other.horizontal)
+			return false;
+		if (identifier != other.identifier)
+			return false;
+		if (length != other.length)
+			return false;
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
+			return false;
+		return true;
+	}
+
+	
 }

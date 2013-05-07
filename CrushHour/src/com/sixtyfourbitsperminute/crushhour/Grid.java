@@ -44,10 +44,15 @@ public class Grid {
 	}
 
 	/**
+	 * This method moves a vehicle on a grid. It does this by taking in a move 
+	 * object, getting the vehicle associated with the grid, and updating all of 
+	 * the grid information that pertains to that vehicle by modifying the position 
+	 * of the vehicle and updating the vehicle map on the grid. It then returns 
+	 * the new grid that has resulted with the updated vehicle map and updated list 
+	 * of previous grids.
 	 * 
-	 * 
-	 * @param object
-	 * @return
+	 * @param move The move about to be executed.
+	 * @return The resultant grid.
 	 */
 	public Grid executeMove(Move move) {
 		HashMap<Character, Vehicle> newVehicles = new HashMap<Character, Vehicle>(vehicles);
@@ -195,6 +200,10 @@ public class Grid {
 		return true;
 	}
 	
+	/**
+	 * This method returns null if the current grid is in the list of previous grids.
+	 * @return The grid, if it isn't in the previous grids list.
+	 */
 	public Grid nullIfPreviousState(){
 		String thisState = this.gridToString();
 		for(Grid g: previousGrids){
@@ -204,6 +213,7 @@ public class Grid {
 		}
 		return this;
 	}
+	
 	/**
 	 * This method turns the list of vehicles associated with a grid into a String 
 	 * complete with x's for empty spots so that the grid can be handed over to 
