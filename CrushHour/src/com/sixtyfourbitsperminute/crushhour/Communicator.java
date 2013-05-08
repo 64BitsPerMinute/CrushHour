@@ -152,13 +152,22 @@ public class Communicator {
 		
 	}
 	
+	/**
+	 * This method sends the current status of the program to the GUI to be 
+	 * printed out as data for the user.
+	 * @param status A String holding the status of the program.
+	 */
 	public void sendStatus(String status) {
 		OSCMessage message1 = new OSCMessage("/ch/status");
 		message1.addArgument(status);
 		send(message1);
-		
 	}
 	
+	/**
+	 * This method sends the number holding the time it took to solve a puzzle to 
+	 * the GUI to be printed out as data for the user.
+	 * @param timeInSec The time to find a solution.
+	 */
 	public void sendToTimeToSolve(long timeInSec) {
 		OSCMessage message1 = new OSCMessage("/ch/timetosolve");
 		message1.addArgument((float)timeInSec);
