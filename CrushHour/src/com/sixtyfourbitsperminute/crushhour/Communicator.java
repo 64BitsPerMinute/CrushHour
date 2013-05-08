@@ -71,25 +71,30 @@ public class Communicator {
 				String mes = ((String)message.getArguments()[0]);
 				//mes.concat("\n");
 				mes = mes + "Z";
-				System.out.println("Recieved " + mes);
+				sendStatus("Solving User Puzzle... " + mes);
 				Parser parser = new Parser(mes);
 				if(parser.fileCanCreateGrid()){
 					currentPuzzle = parser.createGrid();
 					sendToGrid(currentPuzzle.gridToString());
 					Solver s = new Solver();
 					//Grid solved = s.bruteForce(currentPuzzle);
+					long timeOne = System.currentTimeMillis();
 					Grid solved = s.BFS(currentPuzzle);
+					long timeTwo = System.currentTimeMillis();
+					long timeInMilli = timeTwo - timeOne;
 					if(solved != null){
 						solved.previousGrids.add(solved);
-						System.out.println("Solved User Puzzle");
+						sendStatus("Solved User Puzzle");
 						sendToGrid(solved.gridToString());
+						sendToCurrentStep(solved.previousGrids.size());
 						sendToMaxSteps(solved.previousGrids.size());
+						sendToTimeToSolve(timeInMilli);
 						currentPuzzle = solved;
 					}else{
-						System.out.print("I can't solve that! ");
+						sendStatus("This puzzle can't be solved.");
 					}
 				} else {
-					System.out.print("I can't parse that! ");
+					sendStatus("Input not valid. ");
 				}
 			}
 		});
@@ -99,7 +104,7 @@ public class Communicator {
 				int mes = ((Integer)message.getArguments()[0]);
 				//mes.concat("\n");
 				//mes = mes + "Z";
-				System.out.println("Solving Preset Number " + mes);
+				sendStatus("Solving Preset Number " + mes +"...");
 				Parser parser = new Parser(GridStrings.getGrid(mes-1));
 				if(parser.fileCanCreateGrid()){
 					
@@ -107,19 +112,24 @@ public class Communicator {
 					sendToGrid(currentPuzzle.gridToString());
 					Solver s = new Solver();
 					//Grid solved = s.bruteForce(currentPuzzle);
+					long timeOne = System.currentTimeMillis();
 					Grid solved = s.BFS(currentPuzzle);
+					long timeTwo = System.currentTimeMillis();
+					long timeInMilli = timeTwo - timeOne;
 					if(solved != null){
 						solved.previousGrids.add(solved);
-						System.out.println("Solved Preset Number " + mes);
+						sendStatus("Solved Preset Number " + mes);
 						sendToGrid(solved.gridToString());
+						sendToCurrentStep(solved.previousGrids.size());
 						sendToMaxSteps(solved.previousGrids.size());
+						sendToTimeToSolve(timeInMilli);
 						currentPuzzle = solved;
 					}else{
-						System.out.print("I can't solve that! ");
+						sendStatus("This puzzle can't be solved. ");
 					}
 					
 				} else {
-					System.out.print("I can't parse that! ");
+					sendStatus("Input not valid ");
 				}
 			}
 		});
@@ -129,17 +139,33 @@ public class Communicator {
 				int mes = ((Integer)message.getArguments()[0]);
 				//mes.concat("\n");
 				//mes = mes + "Z";
-				System.out.println("Showing Step Number " + mes);
+				
 				if(currentPuzzle.previousGrids.size()<mes){
-					System.out.print("Index Out Of Bounds!");
+					sendStatus("Index Out Of Bounds!");
 					return;
 				}
+				System.out.println("Showing Step Number " + mes);
+				sendToCurrentStep(mes);
 				sendToGrid(currentPuzzle.previousGrids.get(mes-1).gridToString());
 			}
 		});
 		
 	}
 	
+	public void sendStatus(String status) {
+		OSCMessage message1 = new OSCMessage("/ch/status");
+		message1.addArgument(status);
+		send(message1);
+		
+	}
+	
+	public void sendToTimeToSolve(long timeInSec) {
+		OSCMessage message1 = new OSCMessage("/ch/timetosolve");
+		message1.addArgument((float)timeInSec);
+		send(message1);
+		
+	}
+
 	/**
 	 * This method sends the number of steps a solution has to the GUI to be 
 	 * printed out as data for the user.
@@ -148,6 +174,18 @@ public class Communicator {
 	public void sendToMaxSteps(int maxNumberOfSteps) {
 		OSCMessage message1 = new OSCMessage("/ch/maxsteps");
 		message1.addArgument(maxNumberOfSteps);
+		send(message1);
+		
+	}
+	
+	/**
+	 * This method sends the number of steps a solution has to the GUI to be 
+	 * printed out as data for the user.
+	 * @param maxNumberOfSteps The number of steps the solution contains.
+	 */
+	public void sendToCurrentStep(int currentStepNumber) {
+		OSCMessage message1 = new OSCMessage("/ch/currentstep");
+		message1.addArgument(currentStepNumber);
 		send(message1);
 		
 	}
