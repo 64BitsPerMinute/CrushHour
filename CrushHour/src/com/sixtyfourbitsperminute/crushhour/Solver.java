@@ -64,7 +64,10 @@ public class Solver {
 			return grid;
 		}
 		Queue<Grid> queue = new LinkedList<Grid>();
+		ArrayList<Grid> listOfGrids = new ArrayList<Grid>();
+		listOfGrids.add(grid);
 		queue.add(grid);
+		int count = 0;
 		while(!queue.isEmpty()) {
 			Grid parent = queue.remove();
 			Grid child = null;
@@ -73,13 +76,21 @@ public class Solver {
 				ArrayList<Move> currentMoves = current.getPossibleMoves(parent);
 				for(int i = 0; i < currentMoves.size(); i++){
 					if(parent.executeMove(currentMoves.get(i)).nullIfPreviousState() == null){
+						System.out.println("in null if previous state");
 						continue;
 					} else {
+						count++;
 						child = parent.executeMove(currentMoves.get(i));
+						System.out.println("created new child");
 						if(child.playerCanExit()){
+							System.out.println("found solution");
 							return child;
-						} else if(!queue.contains(child)){
+						} else if(!listOfGrids.contains(child)){
+							System.out.println("adding child to queue at position: " + count);
 							queue.add(child);
+							listOfGrids.add(child);
+						} else {
+							System.out.println("queue already contained child.");
 						}
 					}
 				}

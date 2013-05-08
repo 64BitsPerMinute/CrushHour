@@ -171,16 +171,20 @@ public class Grid {
 		if (getClass() != obj.getClass())
 			return false;
 		Grid other = (Grid) obj;
-		if (previousGrids == null) {
-			if (other.previousGrids != null)
-				return false;
-		} else if (!previousGrids.equals(other.previousGrids))
-			return false;
 		if (vehicles == null) {
 			if (other.vehicles != null)
 				return false;
-		} else if (!vehicles.equals(other.vehicles))
+		} else {
+			if(vehicles.size() != other.vehicles.size()){
+				return false;
+			}
+			for(char c : vehicles.keySet()){
+				if(!vehicles.get(c).equals(other.vehicles.get(c))){
+					return false;
+				}
+			}
 			return false;
+		}
 		return true;
 	}
 
