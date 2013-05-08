@@ -64,6 +64,7 @@ public class Solver {
 			return grid;
 		}
 		Queue<Grid> queue = new LinkedList<Grid>();
+		long timeOne = System.currentTimeMillis();
 		ArrayList<Grid> listOfGrids = new ArrayList<Grid>();
 		listOfGrids.add(grid);
 		queue.add(grid);
@@ -84,6 +85,9 @@ public class Solver {
 						System.out.println("created new child");
 						if(child.playerCanExit()){
 							System.out.println("found solution");
+							long timeTwo = System.currentTimeMillis();
+							long timeInMilli = timeTwo - timeOne;
+							long timeInSec = timeInMilli/1000;
 							return child;
 						} else if(!listOfGrids.contains(child)){
 							System.out.println("adding child to queue at position: " + count);

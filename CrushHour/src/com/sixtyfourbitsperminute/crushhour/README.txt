@@ -7,3 +7,6 @@ alongside the Max GUI. When both programs are running, the user can select a puz
 their own, subject to a set of rules. The GUI then hands a string containing the grid over to the Java program 
 which runs it through the algorithm and hands the solved Grid and a number of steps back. The user can then 
 scroll through the steps while the two programs communicate back and forth. 
+
+If you're a TA about to test this. You should run the Java program first, and then use the Max MSP GUI. Otherwise, 
+nothing will happen. 
