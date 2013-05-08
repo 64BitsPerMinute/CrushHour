@@ -164,16 +164,19 @@ public class Grid {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
+		//if (this == obj)
+			//return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Grid other = (Grid) obj;
 		if (vehicles == null) {
-			if (other.vehicles != null)
+			if (other.vehicles != null){
 				return false;
+			} else {
+				return true;
+			}
 		} else {
 			if(vehicles.size() != other.vehicles.size()){
 				return false;
@@ -183,9 +186,9 @@ public class Grid {
 					return false;
 				}
 			}
-			return false;
+			return true;
 		}
-		return true;
+		//return true;
 	}
 
 	/**
